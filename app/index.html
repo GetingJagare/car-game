@@ -1,0 +1,115 @@
+<html>
+ <head>
+    <meta http-equiv="Content-Type" content="text/html; charset = utf-8" />
+    <meta name="viewport" content="user-scalable=no, width=device-width, maximum-scale=1.0"/>
+	 <link rel = "stylesheet" type = "text/css" href = "styles/styles.css">
+	 <script type = "text/javascript" src = "js/jquery-1.7.1.min.js"></script> 
+	 <script type = "text/javascript" src = "js/jCanvaScript.1.5.14.min.js"></script>
+	 <script type = "text/javascript" src = "js/db.js"></script>
+	 <script type = "text/javascript" src = "js/game.js"></script>
+    <script type = "text/javascript" >
+		
+	 var userLogin = "";	
+     function init() {
+	  $("#sup").remove();	 
+	  $("*:not(#menu_list > DIV)").removeClass('not_visible');
+	  $("#gamer > #close_form").click(function () { $(this).parent().removeClass("help_content")
+	                                                        .addClass("not_visible").children("#result").text('');
+	                                           });
+      $("#gamer > #apply").click(save);	                                            
+	  $("#menu_list > .menu").click(function() { 
+		                      $(this).parent().children("DIV").removeClass("help_content")
+		                                                       .addClass("not_visible");
+		                      if ($(this).attr('id') == "help") {
+								  $(this).parent().children("#help_list").removeClass("not_visible")
+								                                         .addClass("help_content");
+							  }
+							  else if ($(this).attr('id') == "save") {
+								  $(this).parent().children("#gamer").removeClass("not_visible")
+								                                      .addClass("help_content");
+								  $("#gamer > #login").val(userLogin);
+							  }
+                              if ($(this).attr('id') == "results") {
+                                $(this).parent().children("#scores").removeClass("not_visible")
+                                                                    .addClass("help_content");
+                                getScores();                                                                    
+                              }	  
+		                       });
+      $("#help_list > #close_help").click(function() {
+		  $(this).parent().removeClass("help_content").addClass("not_visible");
+		  });		                          
+      initGame();
+     }
+     
+     function getCookie(cookieComponent) {
+		var regexp = new RegExp("^[;]?"+cookieComponent+"\\s?=\\s?([\\w]*)[;]?$"); 
+        var cook = document.cookie;
+        if (cook == undefined || cook == "")
+         return undefined;
+        var result = cook.match(regexp);
+        if (result == null) 
+         return undefined;
+         else
+          return unescape(result[1]);
+     }
+     
+     function setCookie(login) {
+        //we will store cookie for a 2 months
+        var cook = "login="+escape(login)+";";
+        var d = new Date(); 
+        d.toUTCString();
+        var month = d.getUTCMonth() + 2, year = d.getUTCFullYear(), day = d.getUTCDay(), 
+            hours = d.getUTCHours(), minutes = d.getUTCMinutes(), secs = d.getUTCSeconds();
+        d = new Date(year, month, day, hours, minutes, secs);
+        cook += "expires="+d.toUTCString() +";domain=iphone.dev";
+        document.cookie = cook;
+     }
+     
+     function parseLogin() {
+		 userLogin = $("#loginForm > #userLogin").val();
+		 if (userLogin == "")
+		  $("#loginForm > #result").text("No input");
+		  else {
+		      setCookie(userLogin);
+			  $("#loginForm").remove();
+			  if (initDB())
+			   check();
+			   }	  
+	 }
+    
+     function main () {
+		$("body *").addClass('not_visible');
+		var html = "<form id = \"loginForm\">Please, input your login: <br><input id = \"userLogin\"><br>"+
+		           "<input type = \"button\" value = \"submit\" id = \"subBut\">&nbsp;"+
+		           "<br><div id = \"result\"></div>"; 
+		$('body').append(html);
+        var prevLogin = getCookie("login");
+        if (prevLogin != undefined && prevLogin != "")
+         $("#loginForm > #userLogin").val(prevLogin);
+		$("#subBut").click(parseLogin);
+	 }
+    </script>
+ </head>
+ <body leftmargin = "30" onload = "main()"> 
+ <div id = "menu_list">
+ <span id = "help" class = "menu">Help</span>&nbsp;<span class = "menu" id = "save">Save</span>&nbsp;
+ <span id = "results" class="menu">Scores</span>
+ <div id = "help_list">
+	 <p>1. You can start or stop game<br>by clicking the button on canvas<br></p>
+	 <p>2. Drive the car by moving mouse<br>Cursor must be not above the car<br></p>
+	 <input type = "button" value = "close" id = "close_help">
+ </div>
+ <div id = "gamer">
+	 Please, save!<br/>
+	 Login: <input id = "login"/><br/>
+	 <input type="button" id = "apply" value = "Apply"/>&nbsp;
+	 <input type = "button" id = "close_form" value = "Close"/><br/>
+	 <div id = "result"></div>
+ </div>
+ <div id = "scores">
+ </div>
+ </div>
+ <canvas id = "canvas" width = "250" height = "400">
+ </canvas>
+ </body>
+</html>

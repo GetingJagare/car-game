@@ -1,0 +1,16 @@
+#canvas {position: absolute; left: 30; top: 40; border: 1px solid black; z-index: 0;}
+
+.menu { font-size: "22px";  font-weight: 800; color: red; }
+
+.menu:hover {text-decoration: underline; cursor: pointer;}
+
+.help_content { position: absolute; background-color: #000; padding: 10px; color: #fff; z-index: 3; width: 228px;
+                -webkit-border-radius: 10px; -moz-border-radius: 10px; border: 1px solid red; border-width: 2px}
+                
+.not_visible {display: none;}
+
+#menu_list > #scores > TABLE TR TH {color: red; font-size: 18px; padding: 5px; text-align: center;}                 
+
+#menu_list > #scores > TABLE TR TD {color: #fff ; padding: 5px; text-align: center; }
+
+
