@@ -1,4 +1,4 @@
-PHP-код в директории app
+App code is in the `app` directory
 
 ## Commands
 ```
