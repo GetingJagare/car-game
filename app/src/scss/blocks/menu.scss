@@ -1,0 +1,25 @@
+.menu__item {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ff0000;
+}
+
+.menu__item:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.menu #scores table tr th,
+.menu #scores table tr td {
+    padding: 5px;
+    text-align: center;
+}
+
+.menu #scores table tr th {
+    color: #ff0000;
+    font-size: 18px;
+}
+
+.menu #scores table tr td {
+    color: #ffffff;
+}

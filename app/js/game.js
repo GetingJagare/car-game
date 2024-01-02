@@ -156,13 +156,10 @@ function randomizeBlocks() {
 			gameOver = true;
 			crashX = res.x;
 			if ( score > 0 ) {
-				/* $("#gamer").removeClass("not_visible").addClass("help_content");
-				 $("#gamer > #login").val(userLogin);*/
 				checkMustBeSaved();
 			}
 			explode( res.x, res.y );
 		}
-		//return;
 	}
 	if ( lifes > 0 )
 		timeoutID = setTimeout( "randomizeBlocks()", 50 );
